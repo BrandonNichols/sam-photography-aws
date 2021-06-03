@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-photoapi-dev-213436-authRole",
+      "UnauthRoleArn": "arn:aws:iam::419467875880:role/amplify-photoapi-dev-213436-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::419467875880:role/amplify-photoapi-dev-213436-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-photoapi-dev-213436-deployment",
+      "UnauthRoleName": "amplify-photoapi-dev-213436-unauthRole",
+      "StackName": "amplify-photoapi-dev-213436",
+      "StackId": "arn:aws:cloudformation:us-east-1:419467875880:stack/amplify-photoapi-dev-213436/bf222000-c1b8-11eb-8412-0ef2dcffec63",
+      "AmplifyAppId": "d283n3hfqfhv9c"
+    },
+    "categories": {
+      "auth": {
+        "cognito4dec91d6": {}
+      }
+    }
+  }
+}

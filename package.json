@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@aws-amplify/ui-react": "^1.2.1",
+    "aws-amplify": "^3.4.3",
     "aws-sdk": "^2.851.0",
     "file-type": "^16.2.0",
     "serverless-s3-sync": "^1.16.1",

@@ -10,7 +10,7 @@ function App() {
   const [imageData, setImageData] = useState({});
 
   const selectImage = (failedImages, successImages) => {
-    // console.log("successImages: ", successImages);
+    console.log("successImages: ", successImages);
     const data = successImages[0];
     const parts = data.split(";");
 
@@ -46,9 +46,9 @@ function App() {
         maxFileSize={5242880}
         onChange={selectImage}
       ></ImageUploader>
-      <button type="button" onClick={submitImage}>
+      {/* <button type="button" onClick={submitImage}>
         Upload Image
-      </button>
+      </button> */}
       <img src={currentImage} alt="sample of what it will look like" />
     </div>
   );
