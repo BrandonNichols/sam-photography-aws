@@ -16,23 +16,32 @@ const Login = (props) => {
     setFormValue({ [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.signIn();
+  };
+
   return (
-    <Form>
-      <input
-        type="email"
-        name="email"
-        value={formValue.email}
-        onChange={handleChange}
-        placeholder="email"
-      />
-      <input
-        type="password"
-        name="password"
-        value={formValue.password}
-        onChange={handleChange}
-        placeholder="password"
-      />
-    </Form>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          value={formValue.email}
+          onChange={handleChange}
+          placeholder="email"
+        />
+        <input
+          type="password"
+          name="password"
+          value={formValue.password}
+          onChange={handleChange}
+          placeholder="password"
+        />
+        <button type="submit"> Submit </button>
+      </Form>
+      <h1>{`Logged In: ${props.loginStatus}`}</h1>
+    </div>
   );
 };
 
