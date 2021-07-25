@@ -1,10 +1,10 @@
-export const SIGN_IN = "SIGN_IN";
-export const SIGN_OUT = "SIGN_OUT";
+export const AUTH_STATE = "AUTH_STATE";
+export const SET_USER = "SET_USER";
 
-export const signIn = () => (dispatch) => {
-  dispatch({ type: SIGN_IN });
+export const setAuthState = (authorize) => (dispatch) => {
+  dispatch({ type: AUTH_STATE, payload: authorize });
 };
 
-export const signOut = () => (dispatch) => {
-  dispatch({ type: SIGN_OUT });
+export const setUser = (user) => (dispatch) => {
+  dispatch({ type: SET_USER, payload: user });
 };

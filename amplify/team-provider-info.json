@@ -10,6 +10,11 @@
       "StackName": "amplify-samphotographyaws-dev-212053",
       "StackId": "arn:aws:cloudformation:us-east-1:419467875880:stack/amplify-samphotographyaws-dev-212053/714e48a0-ea93-11eb-a99e-12f0beb86e05",
       "AmplifyAppId": "d2t95p9iwf74l4"
+    },
+    "categories": {
+      "auth": {
+        "samphotographyawsc162bf80": {}
+      }
     }
   }
 }

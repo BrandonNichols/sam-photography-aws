@@ -1,20 +1,21 @@
-import { SIGN_IN, SIGN_OUT } from "../actions";
+import { AUTH_STATE, SET_USER } from "../actions";
 
 const initialState = {
-  loginStatus: false
+  currentUser: {},
+  authState: ""
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SIGN_IN:
+    case AUTH_STATE:
       return {
         ...state,
-        loginStatus: true
+        authState: action.payload
       };
-    case SIGN_OUT:
+    case SET_USER:
       return {
         ...state,
-        loginStatus: false
+        currentUser: action.payload
       };
     default:
       return state;

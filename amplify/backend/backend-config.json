@@ -1,1 +1,10 @@
-{}
+{
+  "auth": {
+    "samphotographyawsc162bf80": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
