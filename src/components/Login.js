@@ -56,10 +56,17 @@ const Form = styled.form`
 //   );
 // };
 
+const updatePassword = (e, props) => {
+  e.preventDefault();
+  // if (props.user.challengeName === "NEW_PASSWORD_REQUIRED") {
+  //   Auth.completeNewPassword(props.user, newPassword);
+  // }
+};
+
 const currentState = (props) => {
   if (props.user) {
     console.log(props.user);
-    if (props.authState === "resettingpassword") {
+    if (props.authState === AuthState.ResetPassword) {
       return <AmplifyRequireNewPassword />;
     } else if (props.authState === AuthState.SignedIn) {
       return (
