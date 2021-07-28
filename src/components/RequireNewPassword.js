@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Amplify, Auth } from "aws-amplify";
 import { connect } from "react-redux";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsconfig from "../aws-exports";
 
 Amplify.configure(awsconfig);
@@ -25,7 +24,7 @@ const RequireNewPassword = (props) => {
     <form onSubmit={submitNewPassword}>
       <label>Change Password</label>
       <input
-        type="text"
+        type="password"
         value={newPassword}
         onChange={handleChange}
         placeholder="input new password"
