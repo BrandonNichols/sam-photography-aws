@@ -10,6 +10,7 @@ import {
   AmplifyRequireNewPassword
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import RequireNewPassword from "./RequireNewPassword";
 import awsconfig from "../aws-exports";
 
 Amplify.configure(awsconfig);
@@ -56,18 +57,11 @@ const Form = styled.form`
 //   );
 // };
 
-const updatePassword = (e, props) => {
-  e.preventDefault();
-  // if (props.user.challengeName === "NEW_PASSWORD_REQUIRED") {
-  //   Auth.completeNewPassword(props.user, newPassword);
-  // }
-};
-
 const currentState = (props) => {
   if (props.user) {
     console.log(props.user);
     if (props.authState === AuthState.ResetPassword) {
-      return <AmplifyRequireNewPassword />;
+      return <RequireNewPassword />;
     } else if (props.authState === AuthState.SignedIn) {
       return (
         <div>
