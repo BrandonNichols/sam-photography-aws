@@ -21,10 +21,10 @@ const SignIn = (props) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    await Auth.signIn(formValue.email, formValue.password)
+    Auth.signIn(formValue.email, formValue.password)
       .then((user) => {
         props.setUser(user);
         if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
@@ -41,6 +41,9 @@ const SignIn = (props) => {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
+        <label>
+          <h1>Sign in</h1>
+        </label>
         <input
           type="email"
           name="email"
