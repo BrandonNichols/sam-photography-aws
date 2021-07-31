@@ -27,7 +27,10 @@ const SignIn = (props) => {
     Auth.signIn(formValue.email, formValue.password)
       .then((user) => {
         props.setUser(user);
-        if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
+        if (
+          user.challengeName &&
+          user.challengeName === "NEW_PASSWORD_REQUIRED"
+        ) {
           props.setAuthState(AuthState.ResetPassword);
         } else {
           props.setAuthState(AuthState.SignedIn);

@@ -6,6 +6,7 @@ import { Amplify, Auth } from "aws-amplify";
 import { AuthState } from "@aws-amplify/ui-components";
 import RequireNewPassword from "./RequireNewPassword";
 import SignIn from "./SignIn";
+import Dashboard from "./Dashboard";
 import awsconfig from "../aws-exports";
 
 Amplify.configure(awsconfig);
@@ -19,12 +20,8 @@ const currentState = (props) => {
     if (props.authState === AuthState.ResetPassword) {
       return <RequireNewPassword />;
     } else if (props.authState === AuthState.SignedIn) {
-      const email = props.user.signInUserSession.idToken.payload.email;
-      return (
-        <div>
-          <h1>{`Hello ${email}`}</h1>
-        </div>
-      );
+      console.log("USER: ", props.user);
+      return <Dashboard user={props.user} />;
     }
   }
 
