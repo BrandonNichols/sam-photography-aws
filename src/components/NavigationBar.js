@@ -1,10 +1,9 @@
+import { useEffect } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import Login from "./Login";
 import UploadImage from "./UploadImage";
 import Home from "./Home";
-import ChangeEmail from "./ChangeEmail";
-import ChangePassword from "./ChangePassword";
 import Dashboard from "./Dashboard";
 import { setAuthState, setUser } from "../actions";
 import { connect } from "react-redux";
@@ -29,10 +28,31 @@ const NavigationBar = (props) => {
       await Auth.signOut({ global: true });
       props.setAuthState(AuthState.SignedOut);
       props.setUser({});
-    } catch (error) {
-      console.log("error signing out: ", error);
+    } catch (err) {
+      console.log("error signing out: ", err);
     }
   }
+
+  async function onLoad() {
+    Auth.currentSession()
+      .then((data) => {
+        Auth.currentAuthenticatedUser()
+          .then((user) => {
+            props.setUser(user);
+            props.setAuthState(AuthState.SignedIn);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    onLoad();
+  }, []);
 
   return (
     <div>
@@ -41,8 +61,6 @@ const NavigationBar = (props) => {
           <Link to="/">Home</Link>
           <Link to="/upload-image">Upload Image</Link>
           <Link to="/sign-in">Sign In</Link>
-          <Link to="/change-email">Change Email</Link>
-          <Link to="/change-password">Change Password</Link>
           <Link to="/Dashboard">Dashboard</Link>
         </NavBar>
         {props.authState === AuthState.SignedIn && props.user ? (
@@ -54,8 +72,6 @@ const NavigationBar = (props) => {
         <Route exact path="/" component={Home} />
         <Route path="/upload-image" component={UploadImage} />
         <Route path="/sign-in" component={Login} />
-        <Route path="/change-email" component={ChangeEmail} />
-        <Route path="/change-password" component={ChangePassword} />
         <Route path="/Dashboard" component={Dashboard} />
       </Switch>
     </div>

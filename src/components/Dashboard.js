@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Auth } from "aws-amplify";
+import { connect } from "react-redux";
 
 const Dashboard = (props) => {
   return props.user ? (
@@ -9,4 +9,10 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    user: state.currentUser
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);
