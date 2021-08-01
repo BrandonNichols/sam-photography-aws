@@ -20,9 +20,7 @@ const currentState = (props) => {
     if (props.authState === AuthState.ResetPassword) {
       return <RequireNewPassword />;
     } else if (props.authState === AuthState.SignedIn) {
-      console.log("USER: ", props.user);
-      console.log("ATTRIBUTES: ", props.user.attributes);
-      return <Dashboard user={props.user} />;
+      return <Dashboard />;
     }
   }
 
