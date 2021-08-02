@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import Login from "./Login";
+import SignIn from "./SignIn";
+import RequireNewPassword from "./RequireNewPassword";
 import UploadImage from "./UploadImage";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
+import PrivateRoute from "../utils/PrivateRoute";
+// import PublicRoute from "../utils/PublicRoute";
 import { setAuthState, setUser } from "../actions";
 import { connect } from "react-redux";
 import { Auth } from "aws-amplify";
@@ -22,6 +25,11 @@ const NavContainer = styled.div`
   justify-content: space-around;
 `;
 
+const SignOut = styled.button`
+  display: ${(props) =>
+    props.authState === AuthState.SignedIn && props.user ? "inline" : "none"};
+`;
+
 const NavigationBar = (props) => {
   async function signOut() {
     try {
@@ -33,7 +41,7 @@ const NavigationBar = (props) => {
     }
   }
 
-  async function onLoad() {
+  function onLoad() {
     Auth.currentSession()
       .then((data) => {
         Auth.currentAuthenticatedUser()
@@ -61,18 +69,23 @@ const NavigationBar = (props) => {
           <Link to="/">Home</Link>
           <Link to="/upload-image">Upload Image</Link>
           <Link to="/sign-in">Sign In</Link>
-          <Link to="/Dashboard">Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
         </NavBar>
-        {props.authState === AuthState.SignedIn && props.user ? (
-          <button onClick={signOut}>Sign Out</button>
-        ) : null}
+        <SignOut
+          authState={props.authState}
+          user={props.user}
+          onClick={signOut}
+        >
+          Sign Out
+        </SignOut>
       </NavContainer>
 
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/upload-image" component={UploadImage} />
-        <Route path="/sign-in" component={Login} />
-        <Route path="/Dashboard" component={Dashboard} />
+        <PrivateRoute path="/upload-image" component={UploadImage} />
+        <Route path="/sign-in" component={SignIn} />
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <Route path="/new-password" component={RequireNewPassword} />
       </Switch>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Amplify, Auth } from "aws-amplify";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { setAuthState } from "../actions";
 import awsconfig from "../aws-exports";
 import { AuthState } from "@aws-amplify/ui-components";
@@ -21,6 +22,7 @@ const RequireNewPassword = (props) => {
       Auth.completeNewPassword(props.user, newPassword)
         .then((user) => {
           props.setAuthState(AuthState.SignedIn);
+          props.history.push("/dashboard");
         })
         .catch((err) => {
           console.log(err);
@@ -49,4 +51,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setAuthState })(RequireNewPassword);
+export default withRouter(
+  connect(mapStateToProps, { setAuthState })(RequireNewPassword)
+);

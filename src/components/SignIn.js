@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Amplify, Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import { AuthState } from "@aws-amplify/ui-components";
-import { setUser, setAuthState } from "../actions";
+import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import awsconfig from "../aws-exports";
-
-Amplify.configure(awsconfig);
+import { setUser, setAuthState } from "../actions";
 
 const Form = styled.form`
   display: flex;
@@ -15,6 +13,7 @@ const Form = styled.form`
 `;
 
 const SignIn = (props) => {
+  console.log("SIGN_IN");
   const [formValue, setFormValue] = useState("");
 
   const handleChange = (e) => {
@@ -32,8 +31,12 @@ const SignIn = (props) => {
           user.challengeName === "NEW_PASSWORD_REQUIRED"
         ) {
           props.setAuthState(AuthState.ResetPassword);
+          props.history.push("/new-password");
+          // <Redirect to="/new-password" />;
         } else {
           props.setAuthState(AuthState.SignedIn);
+          props.history.push("/dashboard");
+          // <Redirect to="/dashboard" />;
         }
       })
       .catch((err) => {
@@ -67,10 +70,4 @@ const SignIn = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.currentUser
-  };
-};
-
-export default connect(mapStateToProps, { setAuthState, setUser })(SignIn);
+export default withRouter(connect(null, { setUser, setAuthState })(SignIn));
