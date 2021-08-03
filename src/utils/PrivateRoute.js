@@ -1,28 +1,13 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Redirect } from "react-router-dom";
 import { AuthState } from "@aws-amplify/ui-components";
-import { connect } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        rest.authState === AuthState.SignedIn ? (
-          <Component {...props} />
-        ) : (
-          rest.history.push("/sign-in")
-        );
-      }}
-    />
-  );
+  if (rest.authState === AuthState.SignedIn) {
+    return <Route {...rest} component={Component} />;
+  } else {
+    return <Redirect to="/sign-in" />;
+  }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.currentUser,
-    authState: state.authState
-  };
-};
-
-export default withRouter(connect(mapStateToProps)(PrivateRoute));
+export default withRouter(PrivateRoute);

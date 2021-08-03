@@ -7,7 +7,6 @@ import UploadImage from "./UploadImage";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "../utils/PrivateRoute";
-// import PublicRoute from "../utils/PublicRoute";
 import { setAuthState, setUser } from "../actions";
 import { connect } from "react-redux";
 import { Auth } from "aws-amplify";
@@ -82,9 +81,17 @@ const NavigationBar = (props) => {
 
       <Switch>
         <Route exact path="/" component={Home} />
-        <PrivateRoute path="/upload-image" component={UploadImage} />
+        <PrivateRoute
+          path="/upload-image"
+          component={UploadImage}
+          authState={props.authState}
+        />
         <Route path="/sign-in" component={SignIn} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute
+          path="/dashboard"
+          component={Dashboard}
+          authState={props.authState}
+        />
         <Route path="/new-password" component={RequireNewPassword} />
       </Switch>
     </div>

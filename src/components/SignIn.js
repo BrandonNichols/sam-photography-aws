@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Auth } from "aws-amplify";
 import { AuthState } from "@aws-amplify/ui-components";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { setUser, setAuthState } from "../actions";
 
@@ -13,7 +13,6 @@ const Form = styled.form`
 `;
 
 const SignIn = (props) => {
-  console.log("SIGN_IN");
   const [formValue, setFormValue] = useState("");
 
   const handleChange = (e) => {
@@ -32,11 +31,9 @@ const SignIn = (props) => {
         ) {
           props.setAuthState(AuthState.ResetPassword);
           props.history.push("/new-password");
-          // <Redirect to="/new-password" />;
         } else {
           props.setAuthState(AuthState.SignedIn);
           props.history.push("/dashboard");
-          // <Redirect to="/dashboard" />;
         }
       })
       .catch((err) => {
