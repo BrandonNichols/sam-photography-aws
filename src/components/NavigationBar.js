@@ -6,6 +6,7 @@ import RequireNewPassword from "./RequireNewPassword";
 import UploadImage from "./UploadImage";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
+import ChangeEmail from "./ChangeEmail";
 import PrivateRoute from "../utils/PrivateRoute";
 import { setAuthState, setUser } from "../actions";
 import { connect } from "react-redux";
@@ -27,6 +28,11 @@ const NavContainer = styled.div`
 const SignOut = styled.button`
   display: ${(props) =>
     props.authState === AuthState.SignedIn && props.user ? "inline" : "none"};
+`;
+
+const HideSignIn = styled.div`
+  display: ${(props) =>
+    props.authState === AuthState.SignedIn ? "none" : "inline"};
 `;
 
 const NavigationBar = (props) => {
@@ -67,7 +73,9 @@ const NavigationBar = (props) => {
         <NavBar>
           <Link to="/">Home</Link>
           <Link to="/upload-image">Upload Image</Link>
-          <Link to="/sign-in">Sign In</Link>
+          <HideSignIn authState={props.authState}>
+            <Link to="/sign-in">Sign In</Link>
+          </HideSignIn>
           <Link to="/dashboard">Dashboard</Link>
         </NavBar>
         <SignOut
@@ -93,6 +101,7 @@ const NavigationBar = (props) => {
           authState={props.authState}
         />
         <Route path="/new-password" component={RequireNewPassword} />
+        <Route path="/update-email" component={ChangeEmail} />
       </Switch>
     </div>
   );
