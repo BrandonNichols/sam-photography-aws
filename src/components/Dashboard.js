@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
 import styled from "styled-components";
 
 const DashBoardContainer = styled.div`
@@ -12,8 +13,14 @@ const Dashboard = (props) => {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    setEmail(props.user.attributes.email);
-  }, [props.user.attributes.email]);
+    Auth.currentAuthenticatedUser()
+      .then((user) => {
+        setEmail(user.attributes.email);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <DashBoardContainer>
