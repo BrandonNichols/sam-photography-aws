@@ -5,7 +5,6 @@ import SignIn from "./SignIn";
 import RequireNewPassword from "./RequireNewPassword";
 import UploadImage from "./UploadImage";
 import Home from "./Home";
-import Dashboard from "./Dashboard";
 import ChangeEmail from "./ChangeEmail";
 import PrivateRoute from "../utils/PrivateRoute";
 import { setAuthState, setUser } from "../actions";
@@ -25,27 +24,12 @@ const NavContainer = styled.div`
   justify-content: space-around;
 `;
 
-const SignOut = styled.button`
-  display: ${(props) =>
-    props.authState === AuthState.SignedIn && props.user ? "inline" : "none"};
-`;
-
 const HideSignIn = styled.div`
   display: ${(props) =>
     props.authState === AuthState.SignedIn ? "none" : "inline"};
 `;
 
 const NavigationBar = (props) => {
-  async function signOut() {
-    try {
-      await Auth.signOut({ global: true });
-      props.setAuthState(AuthState.SignedOut);
-      props.setUser({});
-    } catch (err) {
-      console.log("error signing out: ", err);
-    }
-  }
-
   function onLoad() {
     Auth.currentSession()
       .then((data) => {
@@ -71,20 +55,10 @@ const NavigationBar = (props) => {
     <div>
       <NavContainer>
         <NavBar>
-          <Link to="/">Home</Link>
-          <Link to="/upload-image">Upload Image</Link>
           <HideSignIn authState={props.authState}>
             <Link to="/sign-in">Sign In</Link>
           </HideSignIn>
-          <Link to="/dashboard">Dashboard</Link>
         </NavBar>
-        <SignOut
-          authState={props.authState}
-          user={props.user}
-          onClick={signOut}
-        >
-          Sign Out
-        </SignOut>
       </NavContainer>
 
       <Switch>
@@ -95,11 +69,6 @@ const NavigationBar = (props) => {
           authState={props.authState}
         />
         <Route path="/sign-in" component={SignIn} />
-        <PrivateRoute
-          path="/dashboard"
-          component={Dashboard}
-          authState={props.authState}
-        />
         <Route path="/new-password" component={RequireNewPassword} />
         <Route path="/update-email" component={ChangeEmail} />
       </Switch>

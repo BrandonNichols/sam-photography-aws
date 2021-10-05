@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Amplify, Auth } from "aws-amplify";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { setAuthState } from "../actions";
+import { setAuthState, setUser } from "../actions";
 import awsconfig from "../aws-exports";
 import { AuthState } from "@aws-amplify/ui-components";
 
@@ -21,8 +21,9 @@ const RequireNewPassword = (props) => {
     if (props.user.challengeName === "NEW_PASSWORD_REQUIRED") {
       Auth.completeNewPassword(props.user, newPassword)
         .then((user) => {
+          props.setUser(user);
           props.setAuthState(AuthState.SignedIn);
-          props.history.push("/dashboard");
+          props.history.push("/");
         })
         .catch((err) => {
           console.log(err);
@@ -52,5 +53,5 @@ const mapStateToProps = (state) => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, { setAuthState })(RequireNewPassword)
+  connect(mapStateToProps, { setAuthState, setUser })(RequireNewPassword)
 );

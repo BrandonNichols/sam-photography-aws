@@ -33,7 +33,7 @@ const SignIn = (props) => {
           props.history.push("/new-password");
         } else {
           props.setAuthState(AuthState.SignedIn);
-          props.history.push("/dashboard");
+          props.history.push("/");
         }
       })
       .catch((err) => {
