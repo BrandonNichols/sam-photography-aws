@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { S3 } from "@aws-sdk/client-s3";
 // import { fromEnv } from "@aws-sdk/credential-provider-env";
 import AWS from "aws-sdk";
 
 const Home = () => {
-  console.log("ACCESS_KEY_ID: ", process.env.REACT_APP_AWS_ACCESS_KEY_ID);
   const creds = new AWS.Credentials(
     process.env.REACT_APP_AWS_ACCESS_KEY_ID,
     process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
@@ -12,6 +10,7 @@ const Home = () => {
 
   AWS.config.update({
     apiVersion: "2006-03-01",
+    region: "us-east-2",
     credentials: creds
   });
 
@@ -21,9 +20,9 @@ const Home = () => {
     }
   });
 
-  const listBucketHandler = async () => {
+  const listBucketHandler = () => {
     try {
-      const res = await s3.listObjectsV2({}, function (err, data) {
+      s3.listObjectsV2({}, function (err, data) {
         if (err) {
           console.log("ERROR: ", err);
         }

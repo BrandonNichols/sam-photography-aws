@@ -633,7 +633,7 @@
     "@aws-sdk/util-waiter" "3.6.1"
     "tslib" "^2.0.0"
 
-"@aws-sdk/client-s3@^3.6.1", "@aws-sdk/client-s3@3.6.1":
+"@aws-sdk/client-s3@3.6.1":
   "integrity" "sha512-59cTmZj92iwgNoAeJirK5sZNQNXLc/oI3luqrEHRNLuOh70bjdgad70T0a5k2Ysd/v/QNamqJxnCJMPuX1bhgw=="
   "resolved" "https://registry.npmjs.org/@aws-sdk/client-s3/-/client-s3-3.6.1.tgz"
   "version" "3.6.1"
@@ -797,7 +797,7 @@
     "@aws-sdk/types" "3.6.1"
     "tslib" "^1.8.0"
 
-"@aws-sdk/credential-provider-ini@^3.6.1", "@aws-sdk/credential-provider-ini@3.6.1":
+"@aws-sdk/credential-provider-ini@3.6.1":
   "integrity" "sha512-3jguW6+ttRNddRZvbrs1yb3F1jrUbqyv0UfRoHuOGthjTt+L9sDpJaJGugYnT3bS9WBu1NydLVE2kDV++mJGVw=="
   "resolved" "https://registry.npmjs.org/@aws-sdk/credential-provider-ini/-/credential-provider-ini-3.6.1.tgz"
   "version" "3.6.1"
