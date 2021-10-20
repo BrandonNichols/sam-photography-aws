@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { AuthState } from "@aws-amplify/ui-components";
@@ -10,8 +12,10 @@ const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
+  top: 0;
   width: min-content;
   border: 1px dotted black;
+  z-index: 1;
 `;
 
 const Sidebar = (props) => {
@@ -23,6 +27,7 @@ const Sidebar = (props) => {
       await Auth.signOut({ global: true });
       props.setAuthState(AuthState.SignedOut);
       props.setUser({});
+      props.history.push("/");
     } catch (err) {
       console.log("error signing out: ", err);
     }
@@ -31,12 +36,10 @@ const Sidebar = (props) => {
   useEffect(() => {
     Auth.currentAuthenticatedUser()
       .then((user) => {
-        console.log("logged in");
         setEmail(user.attributes.email);
         setShowSidebar(true);
       })
       .catch((err) => {
-        console.log("not logged in");
         console.log(err);
         setShowSidebar(false);
       });
@@ -61,4 +64,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { setAuthState, setUser })(Sidebar);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { setAuthState, setUser })
+)(Sidebar);
