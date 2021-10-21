@@ -1,18 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { fromEnv } from "@aws-sdk/credential-provider-env";
-import AWS from "aws-sdk";
+import { AWS } from "../utils/S3CredConfig";
 
 const Home = () => {
-  const creds = new AWS.Credentials(
-    process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-  );
-
-  AWS.config.update({
-    apiVersion: "2006-03-01",
-    region: "us-east-2",
-    credentials: creds
-  });
+  const [images, setImages] = useState([]);
 
   const s3 = new AWS.S3({
     params: {
@@ -26,7 +17,7 @@ const Home = () => {
         if (err) {
           console.log("ERROR: ", err);
         }
-        console.log("Data: ", data);
+        setImages(data.Contents);
       });
     } catch (error) {
       console.error(error);
@@ -40,6 +31,15 @@ const Home = () => {
   return (
     <div>
       <h1>HOME</h1>
+      {images.map((image, index) => {
+        return (
+          <img
+            key={index}
+            src={`https://photo-storage-wallflouer.s3.us-east-2.amazonaws.com/${image.Key}`}
+            alt=""
+          />
+        );
+      })}
     </div>
   );
 };
