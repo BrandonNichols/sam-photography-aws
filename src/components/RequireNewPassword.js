@@ -21,6 +21,7 @@ const RequireNewPassword = (props) => {
     if (props.user.challengeName === "NEW_PASSWORD_REQUIRED") {
       Auth.completeNewPassword(props.user, newPassword)
         .then((user) => {
+          props.setUser({});
           props.setUser(user);
           props.setAuthState(AuthState.SignedIn);
           props.history.push("/");
