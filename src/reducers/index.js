@@ -1,8 +1,9 @@
-import { AUTH_STATE, SET_USER } from "../actions";
+import { AUTH_STATE, SET_USER, IMAGES } from "../actions";
 
 const initialState = {
   currentUser: {},
-  authState: ""
+  authState: "",
+  images: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.payload
+      };
+    case IMAGES:
+      return {
+        ...state,
+        images: action.payload
       };
     default:
       return state;
