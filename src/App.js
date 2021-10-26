@@ -1,6 +1,7 @@
 import "./App.css";
 import NavigationBar from "./components/NavigationBar";
 import Sidebar from "./components/Sidebar";
+import LoadRoute from "./components/LoadRoutes";
 require("dotenv").config();
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
       <NavigationBar />
       <Sidebar />
+      <LoadRoute />
     </div>
   );
 }
