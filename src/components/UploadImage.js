@@ -9,12 +9,28 @@ const FormContainer = styled.div`
 
 const UploadImage = () => {
   const [fileName, setFileName] = useState("");
+  const [image, setImage] = useState({});
+  const [mime, setMime] = useState("");
 
   const imageUploadHandler = (e) => {
     const file = e.currentTarget.files[0];
-    const name = file.name;
 
-    setFileName(name);
+    if (file) {
+      setFileName(file.name);
+      setMime(file.type);
+
+      const reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function () {
+          setImage(reader.result);
+        },
+        false
+      );
+
+      reader.readAsDataURL(file);
+    }
   };
 
   const submitImage = (e) => {
@@ -25,10 +41,11 @@ const UploadImage = () => {
       }
     });
 
-    const binaryFile = new Buffer.from(fileName, "binary");
-
     const params = {
-      Body: binaryFile,
+      Body: JSON.stringify({
+        base64Image: image,
+        mime: mime
+      }),
       Key: fileName
     };
 

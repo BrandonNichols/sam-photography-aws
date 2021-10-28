@@ -69,13 +69,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   }
 };
 
-const mapStateToProps = (state) => {
-  return {
-    authState: state.authState
-  };
-};
-
 export default compose(
-  connect(mapStateToProps, { setAuthState, setUser }),
+  connect(null, { setAuthState, setUser }),
   withRouter
 )(PrivateRoute);

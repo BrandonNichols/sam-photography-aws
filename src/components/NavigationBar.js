@@ -1,15 +1,6 @@
-import { useEffect } from "react";
-import { Link, Route, Switch } from "react-router-dom";
-import styled from "styled-components";
-import SignIn from "./SignIn";
-import RequireNewPassword from "./RequireNewPassword";
-import UploadImage from "./UploadImage";
-import Home from "./Home";
-import ChangeEmail from "./ChangeEmail";
-import PrivateRoute from "../utils/PrivateRoute";
-import { setAuthState, setUser } from "../actions";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Auth } from "aws-amplify";
+import styled from "styled-components";
 import { AuthState } from "@aws-amplify/ui-components";
 
 const NavBar = styled.div`
@@ -30,27 +21,6 @@ const HideSignIn = styled.div`
 `;
 
 const NavigationBar = (props) => {
-  function onLoad() {
-    Auth.currentSession()
-      .then((data) => {
-        Auth.currentAuthenticatedUser()
-          .then((user) => {
-            props.setUser(user);
-            props.setAuthState(AuthState.SignedIn);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    onLoad();
-  }, []);
-
   return (
     <div>
       <NavContainer>
@@ -60,29 +30,14 @@ const NavigationBar = (props) => {
           </HideSignIn>
         </NavBar>
       </NavContainer>
-
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <PrivateRoute
-          path="/upload-image"
-          component={UploadImage}
-          authState={props.authState}
-        />
-        <Route path="/sign-in" component={SignIn} />
-        <Route path="/new-password" component={RequireNewPassword} />
-        <Route path="/update-email" component={ChangeEmail} />
-      </Switch>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    authState: state.authState,
-    user: state.currentUser
+    authState: state.authState
   };
 };
 
-export default connect(mapStateToProps, { setAuthState, setUser })(
-  NavigationBar
-);
+export default connect(mapStateToProps, null)(NavigationBar);
