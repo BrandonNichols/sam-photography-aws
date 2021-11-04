@@ -1,47 +1,38 @@
-import React, { useEffect, useState } from "react";
-// import { fromEnv } from "@aws-sdk/credential-provider-env";
-import { AWS } from "../utils/S3CredConfig";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
-const Home = () => {
-  const [images, setImages] = useState([]);
+const CenteredDiv = styled.div`
+  width: min-content;
+  min-width: 100px;
+  min-height: 100px;
+  background-color: red;
+  margin: 0 auto;
+`;
 
-  const s3 = new AWS.S3({
-    params: {
-      Bucket: process.env.REACT_APP_BUCKET
-    }
-  });
+const Image = styled.img`
+  max-width: 100px;
+  max-height: 100px;
+`;
 
-  const listBucketHandler = () => {
-    try {
-      s3.listObjectsV2({}, function (err, data) {
-        if (err) {
-          console.log("ERROR: ", err);
-        }
-        setImages(data.Contents);
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    listBucketHandler();
-  }, []);
-
+const Home = (props) => {
   return (
     <div>
       <h1>HOME</h1>
-      {images.map((image, index) => {
+      {props.imageContainers.map((imgObj, index) => {
         return (
-          <img
-            key={index}
-            src={`https://photo-storage-wallflouer.s3.us-east-2.amazonaws.com/${image.Key}`}
-            alt=""
-          />
+          <CenteredDiv key={index}>
+            <Image src={`${imgObj.base64Image}`} alt="" />
+          </CenteredDiv>
         );
       })}
     </div>
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    imageContainers: state.images
+  };
+};
+
+export default connect(mapStateToProps, null)(Home);
