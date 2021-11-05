@@ -52,6 +52,7 @@ const Sidebar = (props) => {
         <Link to="/">Home</Link>
         <Link to="/update-email">Update Email</Link>
         <Link to="/upload-image">Upload Image</Link>
+        <Link to="/organize-images">Organize Images</Link>
         <button onClick={signOut}>Sign Out</button>
       </SideBarContainer>
     </div>

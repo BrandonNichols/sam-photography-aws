@@ -6,6 +6,7 @@ import RequireNewPassword from "./RequireNewPassword";
 import UploadImage from "./UploadImage";
 import Home from "./Home";
 import ChangeEmail from "./ChangeEmail";
+import OrganizeImages from "./OrganizeImages";
 import { connect } from "react-redux";
 import { setAuthState, setUser } from "../actions";
 import { Auth } from "aws-amplify";
@@ -31,7 +32,7 @@ const LoadRoute = (props) => {
 
   useEffect(() => {
     onLoad();
-  }, []);
+  }, [props.bucketSize]);
 
   return (
     <Switch>
@@ -39,6 +40,7 @@ const LoadRoute = (props) => {
         <Home {...props} />
       </Route>
       <PrivateRoute path="/upload-image" component={UploadImage} />
+      <PrivateRoute path="/organize-images" component={OrganizeImages} />
       <Route path="/sign-in" component={SignIn} />
       <Route path="/new-password" component={RequireNewPassword} />
       <Route path="/update-email" component={ChangeEmail} />
@@ -49,7 +51,8 @@ const LoadRoute = (props) => {
 const mapStateToProps = (state) => {
   return {
     authState: state.authState,
-    user: state.currentUser
+    user: state.currentUser,
+    bucketSize: state.bucketSize
   };
 };
 

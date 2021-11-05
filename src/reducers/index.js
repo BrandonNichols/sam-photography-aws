@@ -29,6 +29,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         images: action.payload
+          ? action.payload.sort((a, b) => (a.order > b.order ? 1 : -1))
+          : []
       };
     case BUCKET_SIZE:
       return {
