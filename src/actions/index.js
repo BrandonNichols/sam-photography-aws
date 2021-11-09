@@ -17,6 +17,10 @@ export const incrementBucket = () => (dispatch) => {
   dispatch({ type: INCREMENT_BUCKET_COUNT });
 };
 
+export const setImages = (images) => (dispatch) => {
+  dispatch({ type: IMAGES, payload: images });
+};
+
 export const fetchBucket = () => (dispatch) => {
   const s3 = new AWS.S3({
     params: {

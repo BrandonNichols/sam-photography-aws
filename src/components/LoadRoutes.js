@@ -32,7 +32,7 @@ const LoadRoute = (props) => {
 
   useEffect(() => {
     onLoad();
-  }, []);
+  }, [props.bucketSize]);
 
   return (
     <Switch>
