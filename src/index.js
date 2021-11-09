@@ -13,7 +13,7 @@ import { fetchBucket } from "./actions";
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
-store.dispatch(fetchBucket());
+// store.dispatch(fetchBucket());
 
 ReactDOM.render(
   <React.StrictMode>

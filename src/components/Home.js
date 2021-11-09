@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { fetchBucket } from "../actions";
 
 const CenteredDiv = styled.div`
   width: min-content;
@@ -15,6 +17,10 @@ const Image = styled.img`
 `;
 
 const Home = (props) => {
+  useEffect(() => {
+    props.fetchBucket();
+  }, []);
+
   return (
     <div>
       <h1>HOME</h1>
@@ -35,4 +41,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, { fetchBucket })(Home);
