@@ -32,7 +32,7 @@ const LoadRoute = (props) => {
 
   useEffect(() => {
     onLoad();
-  }, [props.bucketSize]);
+  }, []);
 
   return (
     <Switch>
@@ -50,9 +50,7 @@ const LoadRoute = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    authState: state.authState,
-    user: state.currentUser,
-    bucketSize: state.bucketSize
+    user: state.currentUser
   };
 };
 

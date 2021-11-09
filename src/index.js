@@ -9,11 +9,8 @@ import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import reducer from "./reducers";
-import { fetchBucket } from "./actions";
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
-
-// store.dispatch(fetchBucket());
 
 ReactDOM.render(
   <React.StrictMode>
