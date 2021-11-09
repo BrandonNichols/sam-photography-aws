@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AWS } from "../utils/S3CredConfig";
+import { incrementBucket } from "../actions";
+import { connect } from "react-redux";
 
 const FormContainer = styled.div`
   margin: 0 auto;
   width: fit-content;
 `;
 
-const UploadImage = () => {
+const UploadImage = (props) => {
   const [fileName, setFileName] = useState("");
   const [image, setImage] = useState({});
   const [mime, setMime] = useState("");
@@ -44,7 +46,9 @@ const UploadImage = () => {
     const params = {
       Body: JSON.stringify({
         base64Image: image,
-        mime: mime
+        mime: mime,
+        order: props.bucketSize + 1,
+        name: fileName
       }),
       Key: fileName
     };
@@ -53,6 +57,7 @@ const UploadImage = () => {
       if (err) {
         console.log(err);
       } else {
+        props.incrementBucket();
         console.log("DATA_UPLOAD_IMAGE: ", data);
       }
     });
@@ -71,4 +76,10 @@ const UploadImage = () => {
   );
 };
 
-export default UploadImage;
+const mapStateToProps = (state) => {
+  return {
+    bucketSize: state.bucketSize
+  };
+};
+
+export default connect(mapStateToProps, { incrementBucket })(UploadImage);

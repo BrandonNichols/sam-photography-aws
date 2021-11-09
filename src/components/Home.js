@@ -10,8 +10,8 @@ const CenteredDiv = styled.div`
 `;
 
 const Image = styled.img`
-  min-width: 100px;
-  min-height: 100px;
+  max-width: 100px;
+  max-height: 100px;
 `;
 
 const Home = (props) => {
