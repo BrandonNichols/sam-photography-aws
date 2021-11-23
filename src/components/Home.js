@@ -7,13 +7,12 @@ const CenteredDiv = styled.div`
   width: min-content;
   min-width: 100px;
   min-height: 100px;
-  background-color: red;
   margin: 0 auto;
 `;
 
 const Image = styled.img`
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 500px;
+  max-height: 500px;
 `;
 
 const Home = (props) => {
@@ -27,7 +26,7 @@ const Home = (props) => {
       {props.imageContainers.map((imgObj, index) => {
         return (
           <CenteredDiv key={index}>
-            <Image src={`${imgObj.base64Image}`} alt="" />
+            <Image src={imgObj.link} alt="" />
           </CenteredDiv>
         );
       })}
