@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { AWS } from "../utils/S3CredConfig";
+import { AWS } from "../utils/AWSCredConfig";
 import { incrementBucket } from "../actions";
 import { connect } from "react-redux";
 
@@ -16,49 +16,52 @@ const UploadImage = (props) => {
 
   const imageUploadHandler = (e) => {
     const file = e.currentTarget.files[0];
-
-    if (file) {
-      setFileName(file.name);
-      setMime(file.type);
-
-      const reader = new FileReader();
-
-      reader.addEventListener(
-        "load",
-        function () {
-          setImage(reader.result);
-        },
-        false
-      );
-
-      reader.readAsDataURL(file);
-    }
+    setFileName(file.name);
+    setMime(file.type);
+    setImage(file);
   };
 
   const submitImage = (e) => {
     e.preventDefault();
+    AWS.config.update({
+      apiVersion: "2006-03-01"
+    });
     const s3 = new AWS.S3({
       params: {
-        Bucket: process.env.REACT_APP_BUCKET
+        Bucket: process.env.REACT_APP_BUCKET,
+        Body: image,
+        Key: fileName,
+        ContentType: mime
       }
     });
 
-    const params = {
-      Body: JSON.stringify({
-        base64Image: image,
-        mime: mime,
-        order: props.bucketSize + 1,
-        name: fileName
-      }),
-      Key: fileName
-    };
-
-    s3.putObject(params, function (err, data) {
+    s3.putObject(function (err, data) {
       if (err) {
         console.log(err);
       } else {
         props.incrementBucket();
-        console.log("DATA_UPLOAD_IMAGE: ", data);
+      }
+    });
+
+    AWS.config.update({
+      apiVersion: "2012-08-10"
+    });
+
+    const dbParams = {
+      TableName: process.env.REACT_APP_TABLE,
+      Item: {
+        "photo-name": fileName,
+        order: props.bucketSize + 1,
+        link: `https://${process.env.REACT_APP_BUCKET}.s3.${process.env.REACT_APP_REGION}.amazonaws.com/${fileName}`
+      },
+      ReturnConsumedCapacity: "TOTAL"
+    };
+
+    const docClient = new AWS.DynamoDB.DocumentClient();
+
+    docClient.put(dbParams, function (err, data) {
+      if (err) {
+        console.log(err);
       }
     });
   };
