@@ -4,6 +4,7 @@ export const SET_USER = "SET_USER";
 export const IMAGES = "IMAGES";
 export const BUCKET_SIZE = "BUCKET_SIZE";
 export const INCREMENT_BUCKET_COUNT = "INCREMENT_BUCKET_COUNT";
+export const DECREMENT_BUCKET_COUNT = "DECREMENT_BUCKET_COUNT";
 
 export const setAuthState = (authorize) => (dispatch) => {
   dispatch({ type: AUTH_STATE, payload: authorize });
@@ -15,6 +16,10 @@ export const setUser = (user) => (dispatch) => {
 
 export const incrementBucket = () => (dispatch) => {
   dispatch({ type: INCREMENT_BUCKET_COUNT });
+};
+
+export const decrementBucket = () => (dispatch) => {
+  dispatch({ type: DECREMENT_BUCKET_COUNT });
 };
 
 export const setImages = (images) => (dispatch) => {

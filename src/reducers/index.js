@@ -3,7 +3,8 @@ import {
   SET_USER,
   IMAGES,
   BUCKET_SIZE,
-  INCREMENT_BUCKET_COUNT
+  INCREMENT_BUCKET_COUNT,
+  DECREMENT_BUCKET_COUNT
 } from "../actions";
 
 const initialState = {
@@ -41,6 +42,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         bucketSize: state.bucketSize + 1
+      };
+    case DECREMENT_BUCKET_COUNT:
+      return {
+        ...state,
+        bucketSize: state.bucketSize - 1
       };
     default:
       return state;

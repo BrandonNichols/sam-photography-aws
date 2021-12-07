@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { setImages } from "../actions";
 import styled from "styled-components";
 import { AWS } from "../utils/AWSCredConfig";
+import DeleteImage from "./DeleteImage";
 
 const Image = styled.img`
   max-width: 100px;
@@ -79,6 +80,7 @@ const OrganizeImages = (props) => {
       {props.imageContainers.map((imgObj, index) => {
         return (
           <div key={index}>
+            <DeleteImage name={imgObj["photo-name"]} order={imgObj.order} />
             <Image src={imgObj.link} alt="" />
             <input
               type="number"
