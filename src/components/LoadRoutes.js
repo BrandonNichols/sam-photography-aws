@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../utils/PrivateRoute";
 import SignIn from "./SignIn";
 import RequireNewPassword from "./RequireNewPassword";
-import UploadImage from "./UploadImage";
 import Home from "./Home";
 import ChangeEmail from "./ChangeEmail";
 import OrganizeImages from "./OrganizeImages";
@@ -39,7 +38,6 @@ const LoadRoute = (props) => {
       <Route exact path="/">
         <Home {...props} />
       </Route>
-      <PrivateRoute path="/upload-image" component={UploadImage} />
       <PrivateRoute path="/organize-images" component={OrganizeImages} />
       <Route path="/sign-in" component={SignIn} />
       <Route path="/new-password" component={RequireNewPassword} />

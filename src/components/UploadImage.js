@@ -7,22 +7,41 @@ import { connect } from "react-redux";
 const FormContainer = styled.div`
   margin: 0 auto;
   width: fit-content;
+  height: max-content;
+`;
+
+const PrevImage = styled.img`
+  max-height: 500px;
+  max-width: 500px;
 `;
 
 const UploadImage = (props) => {
   const [fileName, setFileName] = useState("");
   const [image, setImage] = useState({});
   const [mime, setMime] = useState("");
+  const [preview, setPreview] = useState("");
+  const [uploadStatus, setUploadStatus] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(false);
 
   const imageUploadHandler = (e) => {
     const file = e.currentTarget.files[0];
-    setFileName(file.name);
-    setMime(file.type);
-    setImage(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.addEventListener("load", function (e) {
+        setPreview(reader.result);
+      });
+      reader.readAsDataURL(file);
+      setFileName(file.name);
+      setMime(file.type);
+      setImage(file);
+    }
   };
 
   const submitImage = (e) => {
     e.preventDefault();
+
+    setSubmitStatus(true);
+
     AWS.config.update({
       apiVersion: "2006-03-01"
     });
@@ -62,20 +81,28 @@ const UploadImage = (props) => {
     docClient.put(dbParams, function (err, data) {
       if (err) {
         console.log(err);
+        setUploadStatus(false);
+      } else {
+        setUploadStatus(true);
       }
     });
   };
 
   return (
-    <div>
-      <h1>UPLOAD IMAGE</h1>
-      <FormContainer>
-        <form onSubmit={submitImage}>
-          <input type="file" onChange={imageUploadHandler} />
-          <button type="submit">Submit Image</button>
-        </form>
-      </FormContainer>
-    </div>
+    <FormContainer>
+      <form onSubmit={submitImage}>
+        <input type="file" onChange={imageUploadHandler} />
+        <button type="submit">Submit Image</button>
+      </form>
+      {submitStatus ? (
+        uploadStatus ? (
+          <p>Successful upload</p>
+        ) : (
+          <p>Upload failed</p>
+        )
+      ) : null}
+      <PrevImage src={preview} alt="" />
+    </FormContainer>
   );
 };
 

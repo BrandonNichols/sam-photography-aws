@@ -4,6 +4,7 @@ import { setImages } from "../actions";
 import styled from "styled-components";
 import { AWS } from "../utils/AWSCredConfig";
 import DeleteImage from "./DeleteImage";
+import UploadImage from "./UploadImage";
 
 const Image = styled.img`
   max-width: 100px;
@@ -77,6 +78,7 @@ const OrganizeImages = (props) => {
   return (
     <OrganizerContainer>
       <h1>Organize Images</h1>
+      <UploadImage />
       {props.imageContainers.map((imgObj, index) => {
         return (
           <div key={index}>
