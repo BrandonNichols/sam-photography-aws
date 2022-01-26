@@ -11,6 +11,11 @@ const LoadingIcon = styled.h1`
   display: ${(props) => (props.show ? "inline" : "none")};
 `;
 
+const FormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const ChangeEmail = (props) => {
   const [newEmail, setNewEmail] = useState("");
   const [changeNotification, setChangeNotification] = useState(false);
@@ -41,7 +46,7 @@ const ChangeEmail = (props) => {
     }
   };
   return (
-    <div>
+    <FormContainer>
       <form onSubmit={handleSubmit}>
         <label>
           <h1>Update Email Address</h1>
@@ -62,7 +67,7 @@ const ChangeEmail = (props) => {
           <h1>Email failed to be updated</h1>
         )}
       </NotificationContainer>
-    </div>
+    </FormContainer>
   );
 };
 

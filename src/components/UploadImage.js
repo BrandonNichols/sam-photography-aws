@@ -1,18 +1,57 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { AWS } from "../utils/AWSCredConfig";
 import { incrementBucket } from "../actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 
 const FormContainer = styled.div`
-  margin: 0 auto;
+  margin: 40px 0;
   width: fit-content;
   height: max-content;
+  border: 5px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const PrevImage = styled.img`
   max-height: 500px;
   max-width: 500px;
+  margin-top: 20px;
+`;
+
+const Title = styled.h2`
+  width: 100%;
+  text-align: center;
+`;
+
+const SpinAnimation = keyframes`
+  from{
+    transform: rotate(0deg);
+  }
+
+  to{
+    transform: rotate(360deg);
+  }
+`;
+
+const Loader = styled.div`
+  display: ${(props) => (props.submitStatus ? "block" : "none")};
+  border: 10px solid grey;
+  border-top: 10px solid blue;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  animation: ${SpinAnimation} 2s linear infinite;
+`;
+
+const UpdateStatus = styled.div`
+  display: ${(props) => (props.displayUpload ? "block" : "none")};
+  margin: 10px 50%;
 `;
 
 const UploadImage = (props) => {
@@ -21,10 +60,12 @@ const UploadImage = (props) => {
   const [mime, setMime] = useState("");
   const [preview, setPreview] = useState("");
   const [uploadStatus, setUploadStatus] = useState(false);
+  const [displayUpload, setDisplayUpload] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(false);
 
   const imageUploadHandler = (e) => {
     const file = e.currentTarget.files[0];
+    setDisplayUpload(false);
     if (file) {
       const reader = new FileReader();
       reader.addEventListener("load", function (e) {
@@ -39,8 +80,12 @@ const UploadImage = (props) => {
 
   const submitImage = (e) => {
     e.preventDefault();
-
     setSubmitStatus(true);
+
+    setTimeout(() => {
+      setSubmitStatus(false);
+      setDisplayUpload(true);
+    }, 3000);
 
     AWS.config.update({
       apiVersion: "2006-03-01"
@@ -90,17 +135,29 @@ const UploadImage = (props) => {
 
   return (
     <FormContainer>
-      <form onSubmit={submitImage}>
-        <input type="file" onChange={imageUploadHandler} />
-        <button type="submit">Submit Image</button>
-      </form>
-      {submitStatus ? (
-        uploadStatus ? (
-          <p>Successful upload</p>
-        ) : (
-          <p>Upload failed</p>
-        )
-      ) : null}
+      <Title>Upload Image</Title>
+      <div>
+        <form onSubmit={submitImage}>
+          <input type="file" onChange={imageUploadHandler} />
+          <button type="submit">Submit Image</button>
+        </form>
+        <Loader submitStatus={submitStatus} />
+        <UpdateStatus displayUpload={displayUpload}>
+          {uploadStatus ? (
+            <FontAwesomeIcon
+              icon={faCheck}
+              size={"lg"}
+              style={{ color: "green" }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              size={"lg"}
+              style={{ color: "red" }}
+            />
+          )}
+        </UpdateStatus>
+      </div>
       <PrevImage src={preview} alt="" />
     </FormContainer>
   );

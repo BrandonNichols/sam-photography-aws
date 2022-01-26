@@ -1,6 +1,8 @@
 import { AWS } from "../utils/AWSCredConfig";
 import { decrementBucket, setImages } from "../actions";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 const DeleteImage = (props) => {
   const deleteFromS3 = () => {
@@ -84,7 +86,11 @@ const DeleteImage = (props) => {
     deleteFromS3();
     deleteFromDB();
   };
-  return <button onClick={deleteImage}>x</button>;
+  return (
+    <button className={props.className} onClick={deleteImage}>
+      <FontAwesomeIcon icon={faWindowClose} size={"lg"} transform={"grow-2"} />
+    </button>
+  );
 };
 
 const mapStateToProps = (state) => {

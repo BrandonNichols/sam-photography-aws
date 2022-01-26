@@ -42,9 +42,8 @@ const StyledButton = styled.button`
   background-color: transparent;
 `;
 
-const SignUpText = styled.p`
+const SignOutText = styled.p`
   margin: 0;
-  height: 100%;
   padding: 3%;
 `;
 
@@ -120,7 +119,7 @@ const Sidebar = (props) => {
         >
           <ButtonBorder />
           <StyledButton onClick={signOut} />
-          <SignUpText>Sign Out</SignUpText>
+          <SignOutText>Sign Out</SignOutText>
         </ButtonContainer>
       </SideBarContainer>
     </div>

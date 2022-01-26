@@ -10,6 +10,30 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 18.75rem;
+  align-items: center;
+  justify-content: space-around;
+  height: 230px;
+`;
+
+const SignInContainer = styled.div`
+  margin: 0 auto;
+  width: min-content;
+  text-align: center;
+`;
+
+const SubmitButton = styled.button`
+  border: 1px solid green;
+  color: green;
+  background-color: transparent;
+  width: 50%;
+  border-radius: 10px;
+  height: 50px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: green;
+    color: white;
+  }
 `;
 
 const SignIn = (props) => {
@@ -42,7 +66,7 @@ const SignIn = (props) => {
   };
 
   return (
-    <div>
+    <SignInContainer>
       <Form onSubmit={handleSubmit}>
         <label>
           <h1>Sign in</h1>
@@ -61,9 +85,9 @@ const SignIn = (props) => {
           onChange={handleChange}
           placeholder="password"
         />
-        <button type="submit"> Submit </button>
+        <SubmitButton type="submit"> Submit </SubmitButton>
       </Form>
-    </div>
+    </SignInContainer>
   );
 };
 
